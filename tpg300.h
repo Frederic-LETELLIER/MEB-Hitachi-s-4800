@@ -49,6 +49,7 @@ public:
   void fermeture_port(void);  // fermeture de la connexion RS232
 
   void traitement_commandes(QString commande_a_executer); // traitement des commandes a executer
+  void traitement_commandes_affichage(QString commande_a_executer); // traitement des commandes a executer - affichage
 
   void ecriture_logs(QString ligne_a_ecrire1); // gestion des logs
 

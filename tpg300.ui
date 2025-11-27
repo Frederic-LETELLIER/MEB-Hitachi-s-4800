@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MEB S-4800 (septembre 2025 - PIMM - Frédéric LETELLIER)</string>
+   <string>MEB S-4800 (Novembre 2025 - PIMM - Frédéric LETELLIER)</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">

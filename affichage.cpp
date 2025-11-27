@@ -33,8 +33,30 @@ void TPG300::affichageHTML(QString ligne, QString couleur)
        ligne_html = "<font color=\"Green\">" + ligne + "</font><br>";
   else if( couleur.contains("noir") )
        ligne_html = "<font color=\"Black\">" + ligne + "</font><br>";
+  else if( couleur.contains("rose") )
+      ligne_html = "<font color=\"Pink\">" + ligne + "</font><br>";
+  else if( couleur.contains("orange") )
+      ligne_html = "<font color=\"Orange\">" + ligne + "</font><br>";
   else  // si aucune couleur n'est definie, la couleur par defaut est le noir
        ligne_html = "<font color=\"Black\">" + ligne + "</font><br>";
+
+
+  // on regarde si c'est un envoi
+  if(ligne.contains("Commande à éxécuter : "))
+  {
+    ligne_html = ligne.replace("Commande à éxécuter : ","");
+    ligne_html = "<strong><font color=\"Blue\">" + ligne_html + "</font></strong>";
+    ligne_html = "<font color=\"Black\">Commande à éxécuter : </font>" + ligne_html + "<br>";
+  }
+
+
+  // on regarde si c'est une reception
+  if(ligne.contains("Reception : "))
+  {
+      ligne_html = ligne.replace("Reception : ","");
+      ligne_html = "<strong><font color=\"Green\">" + ligne_html + "</font></strong>";
+      ligne_html = "<font color=\"Black\">Reception : </font>" + ligne_html + "<br>";
+  }
 
 
   // on positionne le curseur a la fin du texte

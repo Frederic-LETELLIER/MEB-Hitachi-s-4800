@@ -27,73 +27,9 @@ void TPG300::traitement_commandes(QString commande_a_executer)
       emit affichageHTML_main_thread2("Commande à éxécuter : " + commande_a_executer, "noir");
 
 
-      if(commande_a_executer.contains("MQHSa"))
-          emit affichageHTML_main_thread2("(High voltage is turned ON)", "noir");
-      else if(commande_a_executer.contains("MQHSb"))
-          emit affichageHTML_main_thread2("(High voltage is turned OFF)", "noir");
-      else if(commande_a_executer.contains("MQHSc"))
-          emit affichageHTML_main_thread2("(AUTO FOCUS is carried out)", "noir");
-      else if(commande_a_executer.contains("MQHSi"))
-          emit affichageHTML_main_thread2("(Direct photo is carried out)", "noir");
-      else if(commande_a_executer.contains("MQHSk"))
-        emit affichageHTML_main_thread2("(Scan is run)", "noir");
-      else if(commande_a_executer.contains("MQHSr"))
-          emit affichageHTML_main_thread2("(Display image is saved in fixed file name)", "noir");
-      else if(commande_a_executer.contains("MQHSt"))
-          emit affichageHTML_main_thread2("(Display image is saved in fixed file name)", "noir");
-      else if(commande_a_executer.contains("MQHZb"))
-          emit affichageHTML_main_thread2("(Emission current is set)", "noir");
-      else if(commande_a_executer.contains("MQHc"))
-          emit affichageHTML_main_thread2("(Stop stage motion)", "noir");
-      else if(commande_a_executer.contains("MPHa"))
-          emit affichageHTML_main_thread2("(Stage XYR position is returned)", "noir");
-      else if(commande_a_executer.contains("MPHb"))
-          emit affichageHTML_main_thread2("(Stage registration position is returned)", "noir");
-      else if(commande_a_executer.contains("MPHc"))
-          emit affichageHTML_main_thread2("(Stage R position is returned)", "noir");
-      else if(commande_a_executer.contains("MPHd"))
-          emit affichageHTML_main_thread2("(Stage XYZTR position is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZA"))
-          emit affichageHTML_main_thread2("(Return acceleration voltage)", "noir");
-      else if(commande_a_executer.contains("MPHZB"))
-          emit affichageHTML_main_thread2("(Emission current is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZC"))
-          emit affichageHTML_main_thread2("(Emission current is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZD"))
-          emit affichageHTML_main_thread2("(WD is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZE"))
-          emit affichageHTML_main_thread2("(Condenser lens notch is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZF"))
-          emit affichageHTML_main_thread2("(Magnification is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZH"))
-          emit affichageHTML_main_thread2("(Stigma current is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZI"))
-          emit affichageHTML_main_thread2("(Beam alignment current is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZP"))
-          emit affichageHTML_main_thread2("(Aperture alignment current is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZQ"))
-          emit affichageHTML_main_thread2("(Stigma alignment X current is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZR"))
-          emit affichageHTML_main_thread2("(Stigma alignment Y current is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZS"))
-          emit affichageHTML_main_thread2("(Low MAG alignment current is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZV"))
-          emit affichageHTML_main_thread2("(Objective lens current coarse is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZW"))
-          emit affichageHTML_main_thread2("(Objective lens current fine is returned)", "noir");
-      else if(commande_a_executer.contains("MPHZZ"))
-          emit affichageHTML_main_thread2("(Equipment condition data returned together)", "noir");
-      else if(commande_a_executer.contains("MPHSc"))
-          emit affichageHTML_main_thread2("(Scanning speed is set to SLOW 1)", "noir");
-      else if(commande_a_executer.contains("MPHSe"))
-          emit affichageHTML_main_thread2("(Scanning speed is set to SLOW 3)", "noir");
-      else if(commande_a_executer.contains("MPHZD"))
-          emit affichageHTML_main_thread2("(Working distance is returned)", "noir");
 
-
-
-
-
+      // on affiche ce que fait la commande
+      traitement_commandes_affichage(commande_a_executer);
 
 
       ecriture_logs("------------------------");
@@ -478,7 +414,7 @@ void TPG300::traitement_commandes(QString commande_a_executer)
 
         if (commande_recue_avant == commande_rs232)
         {
-            emit affichageHTML_main_thread2("Attention, risque d'erreur (même commande que précédemment)", "rouge");
+            emit affichageHTML_main_thread2("Attention, risque d'erreur (même commande que précédemment)", "orange");
         }
 
         commande_recue_avant = commande_rs232;
@@ -564,6 +500,261 @@ void TPG300::fermeture_port(void)
 
 
 
+//////////////////////////////////////////////////////////
+/// Fonction qui gere les commandes a executer - affichage
+///
+void TPG300::traitement_commandes_affichage(QString commande_a_executer)
+{
+
+    // Je me suis arrete a Table 4-2-3 : List of control parameters MPHS + parameter
+
+
+    // MPH
+    if(commande_a_executer.contains("MPHa"))
+        emit affichageHTML_main_thread2("(Stage XYR position is returned)", "noir");
+    else if(commande_a_executer.contains("MPHb"))
+        emit affichageHTML_main_thread2("(Stage registration position is returned)", "noir");
+    else if(commande_a_executer.contains("MPHc"))
+        emit affichageHTML_main_thread2("(Stage R position is returned)", "noir");
+    else if(commande_a_executer.contains("MPHd"))
+        emit affichageHTML_main_thread2("(Stage XYZTR position is returned)", "noir");
+
+
+    // MPHM
+    else if(commande_a_executer.contains("MPHMl"))
+        emit affichageHTML_main_thread2("(Specify the number of frames for averaging under FAST 1)", "noir");
+    else if(commande_a_executer.contains("MPHMm"))
+        emit affichageHTML_main_thread2("(Specify the number of frames for averaging under FAST 2)", "noir");
+
+
+    // MPHP
+    else if(commande_a_executer.contains("MPHPa"))
+        emit affichageHTML_main_thread2("(Contrast is set)", "noir");
+    else if(commande_a_executer.contains("MPHPb"))
+        emit affichageHTML_main_thread2("(Brightness is set)", "noir");
+    else if(commande_a_executer.contains("MPHPd"))
+        emit affichageHTML_main_thread2("(STIGMA X current is set)", "noir");
+    else if(commande_a_executer.contains("MPHPe"))
+        emit affichageHTML_main_thread2("(STIGMA Y current is set)", "noir");
+    else if(commande_a_executer.contains("MPHPf"))
+        emit affichageHTML_main_thread2("(IMAGE SHIFT X current is set)", "noir");
+    else if(commande_a_executer.contains("MPHPg"))
+        emit affichageHTML_main_thread2("(IMAGE SHIFT Y current is set)", "noir");
+    else if(commande_a_executer.contains("MPHPh"))
+        emit affichageHTML_main_thread2("(Objective lens current coarse is set)", "noir");
+    else if(commande_a_executer.contains("MPHPi"))
+        emit affichageHTML_main_thread2("(Objective lens current fine is set)", "noir");
+
+
+    // MPHS
+    else if(commande_a_executer.contains("MPHSa"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to FAST 1)", "noir");
+    else if(commande_a_executer.contains("MPHSb"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to FAST 2)", "noir");
+    else if(commande_a_executer.contains("MPHSc"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to SLOW 1)", "noir");
+    else if(commande_a_executer.contains("MPHSd"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to SLOW 2)", "noir");
+    else if(commande_a_executer.contains("MPHSe"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to SLOW 3)", "noir");
+    else if(commande_a_executer.contains("MPHSf"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to SLOW 4)", "noir");
+    else if(commande_a_executer.contains("MPHSg"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to REDUCE 1)", "noir");
+    else if(commande_a_executer.contains("MPHSh"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to REDUCE 2)", "noir");
+    else if(commande_a_executer.contains("MPHSi"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to Normal)", "noir");
+    else if(commande_a_executer.contains("MPHSj"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to Split Screen)", "noir");
+    else if(commande_a_executer.contains("MPHSk"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to Dual MAG 1:4)", "noir");
+    else if(commande_a_executer.contains("MPHSl"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to Dual MAG 1:8)", "noir");
+    else if(commande_a_executer.contains("MPHSm"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to Line Position set)", "noir");
+    else if(commande_a_executer.contains("MPHSn"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to Spot Position set)", "noir");
+    else if(commande_a_executer.contains("MPHSo"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to Area Position Set)", "noir");
+
+    else if(commande_a_executer.contains("MPHSp"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to Line Scan)", "noir");
+    else if(commande_a_executer.contains("MPHSq"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to Spot)", "noir");
+
+    else if(commande_a_executer.contains("MPHSr"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to Area Scan)", "noir");
+    else if(commande_a_executer.contains("MPHSs"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to Focus Monitor)", "noir");
+    else if(commande_a_executer.contains("MPHSt"))
+        emit affichageHTML_main_thread2("(Scanning speed is set to B/C Monitor)", "noir");
+    else if(commande_a_executer.contains("MPHSy"))
+        emit affichageHTML_main_thread2("(Cause the High MAG mode is made effective)", "noir");
+    else if(commande_a_executer.contains("MPHSz"))
+        emit affichageHTML_main_thread2("(Cause the Low MAG mode is made effective)", "noir");
+
+
+    else if(commande_a_executer.contains("MPHXa"))
+        emit affichageHTML_main_thread2("(Normal input signal is set)", "noir");
+    else if(commande_a_executer.contains("MPHXb"))
+        emit affichageHTML_main_thread2("(Split-Left input signal is set)", "noir");
+    else if(commande_a_executer.contains("MPHXc"))
+        emit affichageHTML_main_thread2("(Split-R input signal is set)", "noir");
+    else if(commande_a_executer.contains("MPHXd"))
+        emit affichageHTML_main_thread2("(Line input signal is set)", "noir");
+    else if(commande_a_executer.contains("MPHXe"))
+        emit affichageHTML_main_thread2("(Line background is set)", "noir");
+    else if(commande_a_executer.contains("MPHXf"))
+        emit affichageHTML_main_thread2("(Direct photograph time is set)", "noir");
+    else if(commande_a_executer.contains("MPHXg"))
+        emit affichageHTML_main_thread2("(Memory photograph time is set)", "noir");
+    else if(commande_a_executer.contains("MPHXh"))
+        emit affichageHTML_main_thread2("(Photograph brightness/contrast is set)", "noir");
+    else if(commande_a_executer.contains("MPHXi"))
+        emit affichageHTML_main_thread2("(Film speed and photograph size are set)", "noir");
+    else if(commande_a_executer.contains("MPHXj"))
+        emit affichageHTML_main_thread2("(Raster rotation ON/OFF is set)", "noir");
+    else if(commande_a_executer.contains("MPHXk"))
+        emit affichageHTML_main_thread2("(Raster rotation angle is set)", "noir");
+    else if(commande_a_executer.contains("MPHXl"))
+        emit affichageHTML_main_thread2("(Condenser lens 1 ON/OFF is set)", "noir");
+    else if(commande_a_executer.contains("MPHXm"))
+        emit affichageHTML_main_thread2("(Condenser lens 2 ON/OFF is set)", "noir");
+    else if(commande_a_executer.contains("MPHXn"))
+        emit affichageHTML_main_thread2("(Lens mode is set)", "noir");
+    else if(commande_a_executer.contains("MPHXo"))
+        emit affichageHTML_main_thread2("(Specimen bias voltage ON/OFF is set)", "noir");
+    else if(commande_a_executer.contains("MPHXp"))
+        emit affichageHTML_main_thread2("(Lens degauss is executed)", "noir");
+    else if(commande_a_executer.contains("MPHXr"))
+        emit affichageHTML_main_thread2("(Set capture resolution)", "noir");
+
+
+    // MPHZ
+    else if(commande_a_executer.contains("MPHZA"))
+        emit affichageHTML_main_thread2("(Return acceleration voltage)", "noir");
+    else if(commande_a_executer.contains("MPHZB"))
+        emit affichageHTML_main_thread2("(Emission current is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZC"))
+        emit affichageHTML_main_thread2("(Emission current is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZD"))
+        emit affichageHTML_main_thread2("(WD Working Distance is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZE"))
+        emit affichageHTML_main_thread2("(Condenser lens notch is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZF"))
+        emit affichageHTML_main_thread2("(Magnification is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZH"))
+        emit affichageHTML_main_thread2("(Stigma current is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZI"))
+        emit affichageHTML_main_thread2("(Beam alignment current is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZP"))
+        emit affichageHTML_main_thread2("(Aperture alignment current is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZQ"))
+        emit affichageHTML_main_thread2("(Stigma alignment X current is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZR"))
+        emit affichageHTML_main_thread2("(Stigma alignment Y current is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZS"))
+        emit affichageHTML_main_thread2("(Low MAG alignment current is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZV"))
+        emit affichageHTML_main_thread2("(Objective lens current coarse is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZW"))
+        emit affichageHTML_main_thread2("(Objective lens current fine is returned)", "noir");
+    else if(commande_a_executer.contains("MPHZZ"))
+        emit affichageHTML_main_thread2("(Equipment condition data returned together)", "noir");
+
+
+    // MPHZ
+    else if(commande_a_executer.contains("MPHZd"))
+        emit affichageHTML_main_thread2("(Working distance is set)", "noir");
+    else if(commande_a_executer.contains("MPHZe"))
+        emit affichageHTML_main_thread2("(Condenser lens notch is set)", "noir");
+    else if(commande_a_executer.contains("MPHZf"))
+        emit affichageHTML_main_thread2("(Magnification is set)", "noir");
+    else if(commande_a_executer.contains("MPHZh"))
+        emit affichageHTML_main_thread2("(Stigma current is set)", "noir");
+    else if(commande_a_executer.contains("MPHZi"))
+        emit affichageHTML_main_thread2("(Beam alignment current is set)", "noir");
+    else if(commande_a_executer.contains("MPHZp"))
+        emit affichageHTML_main_thread2("(Aperture alignment current is set)", "noir");
+    else if(commande_a_executer.contains("MPHZq"))
+        emit affichageHTML_main_thread2("(Stigma alignment X current is set)", "noir");
+    else if(commande_a_executer.contains("MPHZr"))
+        emit affichageHTML_main_thread2("(Stigma alignment Y current is set)", "noir");
+    else if(commande_a_executer.contains("MPHZs"))
+        emit affichageHTML_main_thread2("(Low MAG alignment current is set)", "noir");
+    else if(commande_a_executer.contains("MPHZu"))
+        emit affichageHTML_main_thread2("(SE detector is set)", "noir");
+    else if(commande_a_executer.contains("MPHZx"))
+        emit affichageHTML_main_thread2("(Objective lens current coarse is set)", "noir");
+    else if(commande_a_executer.contains("MPHZy"))
+        emit affichageHTML_main_thread2("(Objective lens current fine is set)", "noir");
+
+
+    // MQH
+    else if(commande_a_executer.contains("MQHa"))
+        emit affichageHTML_main_thread2("(Move Stage to specified XY position)", "noir");
+    else if(commande_a_executer.contains("MQHb"))
+        emit affichageHTML_main_thread2("(Move Stage to registration position)", "noir");
+    else if(commande_a_executer.contains("MQHc"))
+        emit affichageHTML_main_thread2("(Stop stage motion)", "noir");
+    else if(commande_a_executer.contains("MQHf"))
+        emit affichageHTML_main_thread2("(Move Stage to specified exchange position)", "noir");
+    else if(commande_a_executer.contains("MQHh"))
+        emit affichageHTML_main_thread2("(Move Stage to specified exchange position)", "noir");
+    else if(commande_a_executer.contains("MQHi"))
+        emit affichageHTML_main_thread2("(Move stage to specified XYR position)", "noir");
+    else if(commande_a_executer.contains("MQHj"))
+        emit affichageHTML_main_thread2("(Move stage by specified relative distance)", "noir");
+    else if(commande_a_executer.contains("MQHk"))
+        emit affichageHTML_main_thread2("(Move stage to specified XY position using RISM mode operation)", "noir");
+    else if(commande_a_executer.contains("MQHl"))
+        emit affichageHTML_main_thread2("(Move stage to specified ZT position)", "noir");
+    else if(commande_a_executer.contains("MQHm"))
+        emit affichageHTML_main_thread2("(Move stage to Hompe position)", "noir");
+
+
+    // MQHS
+    else if(commande_a_executer.contains("MQHSa"))
+        emit affichageHTML_main_thread2("(High voltage is turned ON)", "noir");
+    else if(commande_a_executer.contains("MQHSb"))
+        emit affichageHTML_main_thread2("(High voltage is turned OFF)", "noir");
+    else if(commande_a_executer.contains("MQHSc"))
+        emit affichageHTML_main_thread2("(AUTO FOCUS is carried out)", "noir");
+    else if(commande_a_executer.contains("MQHSe"))
+        emit affichageHTML_main_thread2("(AUTO STIGMA is carried out)", "noir");
+    else if(commande_a_executer.contains("MQHSf"))
+        emit affichageHTML_main_thread2("(BMC and ABCC are carried out)", "noir");
+    else if(commande_a_executer.contains("MQHSg"))
+        emit affichageHTML_main_thread2("(ABCC is carried out)", "noir");
+    else if(commande_a_executer.contains("MQHSh"))
+        emit affichageHTML_main_thread2("(BMC is carried out)", "noir");
+    else if(commande_a_executer.contains("MQHSi"))
+        emit affichageHTML_main_thread2("(Direct photo is carried out)", "noir");
+    else if(commande_a_executer.contains("MQHSj"))
+            emit affichageHTML_main_thread2("(Memory photo is carried out. Display image)", "noir");
+    else if(commande_a_executer.contains("MQHSk"))
+        emit affichageHTML_main_thread2("(Scan is run)", "noir");
+    else if(commande_a_executer.contains("MQHSl"))
+        emit affichageHTML_main_thread2("(Scan is stopped. Freeze)", "noir");
+    else if(commande_a_executer.contains("MQHSq"))
+        emit affichageHTML_main_thread2("(Flashing is carried out)", "noir");
+    else if(commande_a_executer.contains("MQHSr"))
+        emit affichageHTML_main_thread2("(Display image is saved in fixed file name. Direct save is carried out. Destination directory and file name are fixed)", "noir");
+    else if(commande_a_executer.contains("MQHSt"))
+        emit affichageHTML_main_thread2("(Display image is saved in fixed file name. Save captured image. Destination directory and file name are fixed)", "noir");
+
+
+    // MQHZ
+    else if(commande_a_executer.contains("MQHZa"))
+        emit affichageHTML_main_thread2("(Acceleration voltage is set)", "noir");
+    else if(commande_a_executer.contains("MQHZb"))
+        emit affichageHTML_main_thread2("(Emission current is set)", "noir");
+
+
+
+    return;
+}
 
 
 
